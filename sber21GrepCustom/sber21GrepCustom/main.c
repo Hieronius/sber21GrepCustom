@@ -31,13 +31,14 @@ typedef struct {
     bool o;
 } options;
 
-void parseOptions(int argc, char **argv, options *sOpt);
+void parseOptions(int argc, char **argv, options *currentOptionsSet);
+void printDataInfo(char **data);
+void printDebugInfo(options currentOptionsSet);
 
 int main(int argc, char **argv) {
     options currentOptionsSet = {0};
     parseOptions(argc, argv, &currentOptionsSet);
-    
-    printf("Hello, World!\n");
+    printDebugInfo(currentOptionsSet);
     return 0;
 }
 
@@ -127,6 +128,27 @@ void parseOptions(int argc, char **argv, options *currentOptionsSet) { // sOpt -
             break;
         }
     }
-    
-    
+}
+
+void printDataInfo(char **data) {
+    int i = 0;
+    while (*(data + i)) {
+        putc('\t', stdout);
+        puts(*(data + i));
+        i++;
+    }
+}
+
+void printDebugInfo(options currentOptionsSet) {
+    if (currentOptionsSet.filesCount) {
+        printf("files count: %d\n", currentOptionsSet.filesCount);
+        puts("patterns:"); // MARK: Why putc instead of printf?
+        printDataInfo(currentOptionsSet.patterns);
+        puts("patterns files:");
+        printDataInfo(currentOptionsSet.patterns);
+        puts("files:");
+        printDataInfo(currentOptionsSet.files);
+        puts("final pattern:");
+        puts(currentOptionsSet.pattern);
+    }
 }
