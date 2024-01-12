@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <string.h>
 #define SIZE 256
 #define BUFFER_SIZE 4096
 
@@ -31,9 +32,18 @@ typedef struct {
     bool o;
 } options;
 
+//void parse_e_flag(options *s_opt, char *argv[], int *i, int j,
+//                  int *patterns_count) {
+
+//void parse_f_flag(options *s_opt, char *argv[], int *i, int j,
+//                  int *pattern_files_count) {
+
 void parseOptions(int argc, char **argv, options *currentOptionsSet);
 void printDataInfo(char **data);
 void printDebugInfo(options currentOptionsSet);
+void parseFlagE(options *currentOptionsSet, char **argv, int *i, int j, int *patternsCount);
+void parseFlagF(options *currentOptionsSet, char **argv, int *i, int j, int *patternFilesCount);
+
 
 int main(int argc, char **argv) {
     options currentOptionsSet = {0};
@@ -55,13 +65,25 @@ void parseOptions(int argc, char **argv, options *currentOptionsSet) { // sOpt -
             if (*(*argv + i) == '-') { // check argument for being an option
                 
                 if (*(*(argv + i) + 1) == 'e') { // -e and -f are first priority to work with
-                    // parse -e
+                    // parse_e_flag(s_opt, argv, &i, 2, &patterns_count);
+                    parseFlagE(currentOptionsSet, argv, &i, 2, &patternsCount);
                 } else if (*(*(argv + i) + 1) == 'f') {
-                    // parse -f
+                    parseFlagF(currentOptionsSet, argv, &i, 2, &patternFilesCount);
                 } else {
                     
                     // parse other flags
-                    switch (*(*(argv + i))) {
+                    // MARK: Check place for j
+                    int j = 0;
+                    
+                    switch (*(*(argv + i)) + j) {
+                        case 'e':
+                            parseFlagE(currentOptionsSet, argv, &i, j + 1, &patternsCount);
+                            break;
+                        case 'f':
+                            parseFlagF(currentOptionsSet, argv, &i, j + 1, &patternsCount);
+                            currentOptionsSet->f = true;
+                            // case f
+                            break;
                         case 'o':
                             currentOptionsSet->o = true;
                             // case o
@@ -86,14 +108,6 @@ void parseOptions(int argc, char **argv, options *currentOptionsSet) { // sOpt -
                             currentOptionsSet->i = true;
                             // case i
                             break;
-                        case 'e':
-                            currentOptionsSet->e = true;
-                            // case e
-                            break;
-                        case 'f':
-                            currentOptionsSet->f = true;
-                            // case f
-                            break;
                         case 'c':
                             currentOptionsSet->c = true;
                             // case c
@@ -106,6 +120,11 @@ void parseOptions(int argc, char **argv, options *currentOptionsSet) { // sOpt -
                             isValid = false;
                             break;
                     }
+                }
+                
+                if (currentOptionsSet->o && // Check if there is incompatible flags
+                   (currentOptionsSet->l || currentOptionsSet->v || currentOptionsSet->c)) {
+                    currentOptionsSet->o = false;
                 }
                 
                 if (isValid) {
@@ -150,5 +169,27 @@ void printDebugInfo(options currentOptionsSet) {
         printDataInfo(currentOptionsSet.files);
         puts("final pattern:");
         puts(currentOptionsSet.pattern);
+    }
+}
+
+void parseFlagE(options *currentOptionsSet, char **argv, int *i, int j, int *patternsCount) {
+    currentOptionsSet->e = true;
+    if ((*(*(argv + *i)) + j) != '\0') {
+        char buffer[BUFFER_SIZE] = "";
+        strcat(buffer, *(argv + *i) + j);
+        currentOptionsSet->patterns[(*patternsCount)++] = buffer;
+    } else {
+        currentOptionsSet->patterns[(*patternsCount)++] = *(argv + ++(*i)); // MARK: ++ mean "add one to i before use". Check for correct interpretation by pointers
+    }
+}
+
+void parseFlagF(options *currentOptionsSet, char **argv, int *i, int j, int *patternFilesCount) {
+    currentOptionsSet->f = true;
+    if ((*(*(argv + *i)) + j) != '\0') {
+        char buffer[BUFFER_SIZE] = "";
+        strcat(buffer, *(argv + *i) + j);
+        currentOptionsSet->patternFiles[(*patternFilesCount)++] = buffer;
+    } else {
+        currentOptionsSet->patternFiles[(*patternFilesCount)++] = *(argv + ++(*i));
     }
 }
