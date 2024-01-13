@@ -1,0 +1,8 @@
+mkdir -p test
+cp ./s21_grep test/
+cp test.txt test/
+cp test2.txt test/
+cp pat.txt test/
+cd test/
+
+test_number=0

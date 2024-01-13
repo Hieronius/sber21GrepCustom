@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		DD8E496A2B4ACB7A008231CF /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = DD8E49692B4ACB7A008231CF /* main.c */; };
+		DD8E496A2B4ACB7A008231CF /* grep.c in Sources */ = {isa = PBXBuildFile; fileRef = DD8E49692B4ACB7A008231CF /* grep.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -24,7 +24,7 @@
 
 /* Begin PBXFileReference section */
 		DD8E49662B4ACB7A008231CF /* sber21GrepCustom */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = sber21GrepCustom; sourceTree = BUILT_PRODUCTS_DIR; };
-		DD8E49692B4ACB7A008231CF /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		DD8E49692B4ACB7A008231CF /* grep.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = grep.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -57,7 +57,7 @@
 		DD8E49682B4ACB7A008231CF /* sber21GrepCustom */ = {
 			isa = PBXGroup;
 			children = (
-				DD8E49692B4ACB7A008231CF /* main.c */,
+				DD8E49692B4ACB7A008231CF /* grep.c */,
 			);
 			path = sber21GrepCustom;
 			sourceTree = "<group>";
@@ -119,7 +119,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				DD8E496A2B4ACB7A008231CF /* main.c in Sources */,
+				DD8E496A2B4ACB7A008231CF /* grep.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
