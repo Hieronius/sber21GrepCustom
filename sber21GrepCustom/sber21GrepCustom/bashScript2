@@ -1,0 +1,7 @@
+declare -a test_list=("-e seven -e 504 test.txt"
+    "-f pat.txt -e seven test.txt"
+    ...
+    "-c seven test.txt"
+    "-n seven test.txt"
+    "-o seven test.txt"
+    "seven test.txt")
